@@ -25,10 +25,8 @@ class Capybara::RackTest::Browser
   end
 
   def follow_redirects!
-    5.times do
-      follow_redirect! if last_response.redirect?
-    end
-    raise Capybara::InfiniteRedirectError, "redirected more than 5 times, check for infinite redirects." if last_response.redirect?
+    Capybara.redirect_limit.times { last_response.redirect? && follow_redirect! }
+    raise Capybara::InfiniteRedirectError, "redirected more than #{Capybara.redirect_limit} times, check for infinite redirects." if last_response.redirect?
   end
 
   def process(method, path, attributes = {})

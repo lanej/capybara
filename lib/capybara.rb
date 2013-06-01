@@ -15,7 +15,7 @@ module Capybara
   class << self
     attr_accessor :asset_root, :app_host, :run_server, :default_host
     attr_accessor :server_port, :server_boot_timeout
-    attr_accessor :default_selector, :default_wait_time, :ignore_hidden_elements, :prefer_visible_elements
+    attr_accessor :default_selector, :default_wait_time, :ignore_hidden_elements, :prefer_visible_elements, :redirect_limit
     attr_accessor :save_and_open_page_path
 
     ##
@@ -34,6 +34,7 @@ module Capybara
     # [run_server = Boolean]              Whether to start a Rack server for the given Rack app (Default: true)
     # [default_selector = :css/:xpath]    Methods which take a selector use the given type by default (Default: CSS)
     # [default_wait_time = Integer]       The number of seconds to wait for asynchronous processes to finish (Default: 2)
+    # [redirect_limit = Integer]          The number of redirects before exploding (Default: 5)
     # [ignore_hidden_elements = Boolean]  Whether to ignore hidden elements on the page (Default: false)
     # [prefer_visible_elements = Boolean] Whether to prefer visible elements over hidden elements (Default: true)
     #
@@ -233,6 +234,7 @@ Capybara.configure do |config|
   config.server_boot_timeout = 10
   config.default_selector = :css
   config.default_wait_time = 2
+  config.redirect_limit = 5
   config.ignore_hidden_elements = false
   config.prefer_visible_elements = true
   config.default_host = "http://www.example.com"
